@@ -23,7 +23,7 @@ demand_path = 'data/Demand'
 solar_path = 'data/Solar/solar'
 wind_path = 'data/Wind/wind'
 
-# FUNCTIONS
+############## FUNCTIONS ##############
 def process_csv(data_path, save_csv=False, filename=''):
     try: 
         data = pd.read_csv(data_path)
@@ -35,37 +35,35 @@ def process_csv(data_path, save_csv=False, filename=''):
     except Exception as e:
         warnings.warn(f"An error occurred: {e}")
 
-#%% PROCESS DEMAND TRACES
-# create a folder called "Demand traces" in processed_traces folder if the Demand traces does not exists
+#%% 
+############## PROCESS DEMAND TRACES ##############
+# create a folder called "demand_traces" in processed_traces folder if the demand_traces folder does not exists
 if not os.path.exists("processed_traces/demand_traces"):
     os.makedirs("processed_traces/demand_traces")   
 
 for state in states:
     for scenario in scenarios:
-        # create a folder for each scenario in "processed traves" folder if it does not exists
-        if not os.path.exists(f"processed_traces/demand_traces/{scenario}"):
+        if not os.path.exists(f"processed_traces/demand_traces/{scenario}"): # create a folder for each scenario in "processed traves" folder if it does not exists
             os.makedirs(f"processed_traces/demand_traces/{scenario}")
-        for ref_year in ref_years:
-            for poe in poes:
-                # create a folder in the scenario folder for each POE value if it does not exists
-                if not os.path.exists(f"processed_traces/demand_traces/{scenario}/POE{poe}"):
-                    os.makedirs(f"processed_traces/demand_traces/{scenario}/POE{poe}")
+        for poe in poes:
+            if not os.path.exists(f"processed_traces/demand_traces/{scenario}/POE{poe}"): # create a folder in the scenario folder for each POE value if it does not exists
+                os.makedirs(f"processed_traces/demand_traces/{scenario}/POE{poe}")
+            for ref_year in ref_years: # create a folder in the scenario folder for each reference year if it does not exists
+                if not os.path.exists(f"processed_traces/demand_traces/{scenario}/POE{poe}/REF_YEAR_{ref_year}"):
+                    os.makedirs(f"processed_traces/demand_traces/{scenario}/POE{poe}/REF_YEAR_{ref_year}")
                 for file_type in file_types:
                     data_path = f"{demand_path}/ISP Demand Traces {state} {scenario}/demand_{state}_{scenario}/{state}_RefYear_{ref_year}_{map_scenarios[scenario]}_POE{poe}_{file_type}.csv"
-                    filename = f"processed_traces/demand_traces/{scenario}/POE{poe}/{state}_{map_scenarios[scenario]}_REF_YEAR_{ref_year}_POE{poe}_{file_type}.csv"
+                    filename = f"processed_traces/demand_traces/{scenario}/POE{poe}/REF_YEAR_{ref_year}/{state}_{map_scenarios[scenario]}_REF_YEAR_{ref_year}_POE{poe}_{file_type}.csv"
                     process_csv(data_path, save_csv=True, filename=filename)
 
 
-#%% PROCESS SOLAR TRACES
+#%% 
+############## PROCESS SOLAR TRACES ##############
 # get all the filenames from solar_path
 solar_files = os.listdir(solar_path)
 solar_files_no_REZ = [file for file in solar_files if 'REZ' not in file] # get all the files that do not contain REZ in their name
 solar_files_REZ = [file for file in solar_files if 'REZ' in file]         # get all the files that contain REZ in their name
     
-
-
-
-
 # %% PROCESS WIND TRACES
 wind_files = os.listdir(wind_path)
 wind_files_no_REZ = [file for file in wind_files if 'REZ' not in file] # get all the files that do not contain REZ in their name
