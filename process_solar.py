@@ -26,10 +26,10 @@ for year in ref_years:
     path = f"{solar_path}/solar_{year}"
     solar_files = os.listdir(path)
     solar_files_REZ = [file for file in solar_files if 'REZ' in file]           # get all the files that contain REZ in their name
-    REZs = list(set([file.split('_')[1] for file in solar_files_REZ]))          # split the names of solar_files_REZ by every "_" and pick only the second string for each, and drop duplicates
+    REZs = list(set([file.split('_')[1] for file in solar_files_REZ]))          # split the names of solar_files_REZ by every "_", pick only the second string for each (REZ code), and drop duplicates
     for rez in REZs:
         files_rez = [file for file in solar_files_REZ if rez in file] # get only the files to the corresponding REZ
-        if not os.path.exists(f"processed_traces/solar_traces/gen_solar_REZ/REF_YEAR_{year}/{rez}"):
+        if not os.path.exists(f"processed_traces/solar_traces/gen_solar_REZ/REF_YEAR_{year}/{rez}") and len(files_rez) > 0:
             os.makedirs(f"processed_traces/solar_traces/gen_solar_REZ/REF_YEAR_{year}/{rez}")
         for file_rez in files_rez:
             file_path = f"{solar_path}/solar_{year}/{file_rez}"
