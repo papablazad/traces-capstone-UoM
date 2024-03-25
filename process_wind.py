@@ -20,7 +20,7 @@ for year in ref_years:
             warnings.warn(f"{file_path} does not exist!")
         else:
             process_csv(file_path, save_csv=True, filename=f"processed_traces/wind_traces/gen_wind_no_REZ/REF_YEAR_{year}/{gen_no_rez}")
-#%%
+
 # PROCESS WIND TRACES FROM REZ 
 if not os.path.exists("processed_traces/wind_traces/gen_wind_no_REZ"): # check if the folder wind_traces/gen_wind_no_REZ exists in the processed_traces folder. If not, create the folder
     os.makedirs("processed_traces/wind_traces/gen_wind_no_REZ")
