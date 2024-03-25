@@ -2,3 +2,5 @@ _env_activate.txt
 *.csv
 *.venv
 *.zip
+*.pdf
+*.pyc
